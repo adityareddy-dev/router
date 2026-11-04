@@ -1,5 +1,22 @@
 # @tanstack/start-plugin-core
 
+## 1.171.56
+
+### Patch Changes
+
+- [#8863](https://github.com/TanStack/router/pull/8863) [`01fab5a`](https://github.com/TanStack/router/commit/01fab5a6c8aed70d61d82c64bc344cbac66c240c) - The Rsbuild plugin keeps the app's `server.compress` setting instead of always setting it to `false`. Compression stays off by default: a compressed streamed page reaches the browser only once the stream ends. The optional `@rsbuild/core` peer is now `^2.0.5`, the first version whose compression keeps SSR response headers intact.
+
+- [#8861](https://github.com/TanStack/router/pull/8861) [`da8c28c`](https://github.com/TanStack/router/commit/da8c28c498230a5730ce75b2693baeeb3ef68ac1) - Start's router options now reach the route generator and the code splitter as they do in a router app:
+  - Generator plugins given as `router.plugins` run ([#7768](https://github.com/TanStack/router/issues/7768)). Start's own generator plugins used to replace them.
+  - A function-form `router.routeTreeFileFooter` is called at every print of the route tree. Start's Vite plugin used to print its first result for the whole dev server.
+  - Start's Rsbuild plugin keeps `router.codeSplittingOptions.deleteNodes` for the server build. It used to drop the option there.
+  - Start's Vite plugin finds the client route tree by its exact module id ([#8839](https://github.com/TanStack/router/issues/8839)). With a regular-expression character in the project path, such as `+`, the client used to get the full route tree, server-only routes included; a file whose name differed from the route tree's by one character (`routeTree-gen.ts`) was replaced by the client route tree.
+
+- Updated dependencies [[`94f36c4`](https://github.com/TanStack/router/commit/94f36c4a9ecf3062b326a8eb772e73b00c0644d9), [`446ce1b`](https://github.com/TanStack/router/commit/446ce1b30650d85f1fc78f2d1ee42712e40b75c6), [`ad5b3b7`](https://github.com/TanStack/router/commit/ad5b3b7a0990eed7351d672ea6695d341108e0d6), [`533ca27`](https://github.com/TanStack/router/commit/533ca2704452f36c5fef5c5fe084554d9b5db1ab), [`13b6256`](https://github.com/TanStack/router/commit/13b625683030ea4ab359495ecda570e05e472587), [`b5e2ac9`](https://github.com/TanStack/router/commit/b5e2ac9c4cee4c5c6f464adc6cfddcddf6c84171), [`d250819`](https://github.com/TanStack/router/commit/d25081952dd04a5f5a44db7c8df5cbbf50fad054)]:
+  - @tanstack/router-plugin@1.169.0
+  - @tanstack/router-generator@1.168.0
+  - @tanstack/router-utils@1.163.0
+
 ## 1.171.55
 
 ### Patch Changes
