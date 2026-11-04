@@ -62,6 +62,24 @@ Out of the box, TanStack Router will dedupe `title` and `meta` tags, preferring 
 - `title` tags defined in nested routes will override a `title` tag defined in a parent route (but you can compose them together, which is covered in a future section of this guide)
 - `meta` tags with the same `name` or `property` will be overridden by the last occurrence of that tag found in nested routes
 
+### Head Tags and Route Errors
+
+The `head` callback runs as part of route loading. It can inspect `match.status` and `match.error` to provide metadata when `beforeLoad` or `loader` throws. In that case, `loaderData` may be unavailable, so check for it before using it to build your metadata.
+
+```tsx
+export const Route = createFileRoute('/posts/$postId')({
+  head: ({ match }) => ({
+    meta: [
+      {
+        title: match.status === 'error' ? 'Unable to load post' : 'Post',
+      },
+    ],
+  }),
+})
+```
+
+In React, an error caught while rendering a route component does not update `match.status` or `match.error`, and does not re-run `head`. This also applies to a component that throws after a state update. A child route's title can remain in the document even when a parent route's `errorComponent` replaces that child's UI.
+
 ### `<HeadContent />`
 
 The `<HeadContent />` component is **required** to render the head, title, meta, link, and head-related script tags of a document.
